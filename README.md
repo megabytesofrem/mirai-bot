@@ -4,7 +4,7 @@ A fun and friendly server waifu / Discord bot!
 ## Configuration
 Mirai will look for a `config.json` file in the root directory. An example is below, commented
 to explain each part (note: JSON doesn't support comments, so these will need to be removed)
-```json
+```jsonc
 {
   "prefix": "m!", // bot prefix, can be changed with setprefix command but wip
   "owners": [""]  // array of owner ids
