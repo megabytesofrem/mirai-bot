@@ -8,10 +8,10 @@ export default class PingCommand extends Command {
         content: 'Ping pong!',
         usage: 'ping'
       },
-      args: [
-      ],
       category: 'util',
       channel: 'guild',
+      args: [
+      ],
     });
   }
 

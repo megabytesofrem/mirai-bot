@@ -11,6 +11,8 @@ export default class SetFilterCommand extends Command {
         content: 'Set a filter for Mirai',
         usage: 'setfilter'
       },
+      category: 'moderation',
+      channel: 'guild',
       args: [
         {
           id: 'filter',
@@ -20,9 +22,7 @@ export default class SetFilterCommand extends Command {
           id: 'state',
           type: 'string'
         }
-      ],
-      category: 'moderation',
-      channel: 'guild',
+      ]
     });
   }
 

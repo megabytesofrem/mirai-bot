@@ -1,7 +1,6 @@
 import { Command } from 'discord-akairo';
-import { MessageEmbed } from 'discord.js';
+import { errorEmbed } from '../../util/embed';
 
-import { color } from '../../util/structs';
 import _ from 'lodash';
 
 export default class BanCommand extends Command {
@@ -12,6 +11,10 @@ export default class BanCommand extends Command {
         content: 'Ban a member',
         usage: 'ban <member> [reason]'
       },
+      category: 'moderation',
+      clientPermissions: ['BAN_MEMBERS'],
+      userPermissions: ['BAN_MEMBERS'],
+      channel: 'guild',
       args: [
         {
           id: 'member',
@@ -20,23 +23,16 @@ export default class BanCommand extends Command {
         {
           id: 'reason',
           type: 'string',
+          match: 'text',
           default: 'No reason given'
         }
       ],
-      category: 'moderation',
-      clientPermissions: ['BAN_MEMBERS'],
-      userPermissions: ['BAN_MEMBERS'],
-      channel: 'guild',
     })
   }
 
   async exec(message, args) {
     if (!args.member) {
-      const embed = new MessageEmbed()
-        .setTitle('Error')
-        .setDescription(':negative_squared_cross_mark: No member found with that name')
-        .setColor(color.error);
-
+      const embed = errorEmbed('Error while banning', ':negative_squared_cross_mark: No member found with that name');
       return message.channel.send(embed);
     }
 

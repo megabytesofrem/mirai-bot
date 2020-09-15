@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo';
-import { MessageEmbed } from 'discord.js';
+import { errorEmbed } from '../../util/embed';
 
 import { color } from '../../util/structs';
 
@@ -11,6 +11,10 @@ export default class WarnCommand extends Command {
         content: 'Warns a member',
         usage: 'warn <member> [reason]'
       },
+      category: 'moderation',
+      clientPermissions: ['KICK_MEMBERS'],
+      userPermissions: ['KICK_MEMBERS'],
+      channel: 'guild',
       args: [
         {
           id: 'member',
@@ -19,23 +23,16 @@ export default class WarnCommand extends Command {
         {
           id: 'reason',
           type: 'string',
+          match: 'text',
           default: 'No reason given'
         }
       ],
-      category: 'moderation',
-      clientPermissions: ['KICK_MEMBERS'],
-      userPermissions: ['KICK_MEMBERS'],
-      channel: 'guild',
     })
   }
 
   async exec(message, args) {
     if (!args.member) {
-      const embed = new MessageEmbed()
-        .setTitle('Error')
-        .setDescription(':negative_squared_cross_mark: No member found with that name')
-        .setColor(color.error);
-
+      const embed = errorEmbed('Error while warning', ':negative_squared_cross_mark: No member found with that name');
       return message.channel.send(embed);
     }
 

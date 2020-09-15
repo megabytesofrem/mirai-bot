@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
 
-import { colors } from '../util/structs';
+import { errorEmbed } from '../util/embed';
 
 export default class SetPrefixCommand extends Command {
   constructor() {
@@ -11,30 +11,23 @@ export default class SetPrefixCommand extends Command {
         content: 'Set the prefix for Mirai',
         usage: 'setprefix'
       },
+      category: 'util',
+      channel: 'guild',
       args: [
         {
           id: 'prefix',
           type: 'string'
         }
-      ],
-      category: 'util',
-      channel: 'guild',
+      ]
     });
   }
 
   async exec(message, args) {
     if (!args.prefix) {
-      const embed = new MessageEmbed()
-        .setTitle('Error')
-        .setDescription(':negative_squared_cross_mark: Please specify a prefix to use')
-        .setColor(color.error);
-
+      const embed = errorEmbed('Error', ':negative_squared_cross_mark: Please specify a prefix to use');
       return message.channel.send(embed);
     }
 
-
-    let oldPrefix = await this.client.db.getPrefix(message.guild.id);
-    
     // Store the new prefix for the guild in the database
     await this.client.db.setPrefix(message.guild.id, args.prefix);
     this.handler.reloadAll();

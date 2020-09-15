@@ -13,7 +13,8 @@ export default class FigletCommand extends Command {
       args: [
         {
           id: 'message',
-          type: 'string'
+          type: 'string',
+          match: 'text'
         },
         {
           id: 'font',
