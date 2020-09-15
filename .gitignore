@@ -120,3 +120,6 @@ build/
 
 # Don't copy over the default config.json
 config.json
+
+# Don't copy over mirai.sqlite3
+mirai.sqlite3
