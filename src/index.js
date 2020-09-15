@@ -1,4 +1,5 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
+import { Database, setup, getPrefix, setPrefix } from './database';
 
 // Import the config file
 import * as config from '../config.json';
@@ -9,15 +10,28 @@ class MiraiClient extends AkairoClient {
   constructor() {
     super({
       // Akairo options
-      ownerID: config.owners
+      ownerID: config.owners,
     }, {
       // Discord.js options
       disableMentions: 'everyone'
     });
 
+    this.setupDatabase();
+
     this.commandHandler = new CommandHandler(this, {
       directory: './src/commands',
-      prefix: config.prefix
+      prefix: message => {
+        if (message.guild) {
+          const prefix = this.db.getPrefixSync(message.guild.id);
+
+          if (prefix !== "") {
+            return prefix;
+          }
+          else {
+            return 'm!';
+          }
+        }
+      }
     });
 
     // Listeners
@@ -30,6 +44,18 @@ class MiraiClient extends AkairoClient {
 
     // Load all commands
     this.commandHandler.loadAll();
+  }
+
+  async setupDatabase() {
+    // Setup the database for Mirai
+    this.db = new Database();
+
+    console.log('Creating database if it doesn\'t exist..');
+    await this.db.setup();
+  }
+
+  async login(token) {
+    return super.login(token);
   }
 }
 

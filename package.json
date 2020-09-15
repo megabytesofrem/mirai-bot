@@ -18,14 +18,18 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
     "axios": "^0.20.0",
+    "azlyrics-scraper": "^1.0.6",
     "bad-words": "^3.0.3",
+    "better-sqlite3": "^7.1.1",
     "dedent-js": "^1.0.1",
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.3.1",
     "figlet": "^1.5.0",
     "gtts": "^0.2.1",
     "lodash": "^4.17.20",
-    "sodium": "^3.0.2"
+    "sodium": "^3.0.2",
+    "sqlite": "^4.0.14",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",

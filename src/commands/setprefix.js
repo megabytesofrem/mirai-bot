@@ -32,14 +32,16 @@ export default class SetPrefixCommand extends Command {
       return message.channel.send(embed);
     }
 
-    // Change the bot prefix
-    // TODO: Make this persistent in a config file
 
-    let oldPrefix = this.handler.prefix;
-    this.handler.prefix = args.prefix;
+    let oldPrefix = await this.client.db.getPrefix(message.guild.id);
+    
+    // Store the new prefix for the guild in the database
+    await this.client.db.setPrefix(message.guild.id, args.prefix);
+    this.handler.reloadAll();
+
     const embed = new MessageEmbed()
       .setTitle('Success')
-      .setDescription(`:white_check_mark: I have changed my prefix from \`${oldPrefix}\` to \`${args.prefix}\``)
+      .setDescription(`:white_check_mark: I have changed my prefix to \`${args.prefix}\``)
       .setColor(colors.normal);
 
     return message.channel.send(embed);

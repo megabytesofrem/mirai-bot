@@ -38,7 +38,7 @@ export default class HelpCommand extends Command {
 
       // ... and display the usage, if there is one
       if (command.description.usage?.length)
-        embed.addField('❯ Usage', `\`${this.handler.prefix}${command.description.usage}\``);
+        embed.addField('❯ Usage', `\`${this.handler.prefix(message)}${command.description.usage}\``);
 
       return message.channel.send(embed);
     }
@@ -47,8 +47,8 @@ export default class HelpCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Commands for Mirai')
       .setDescription(dedent(`
-      Here are a list of commands registered.\nYou can type \`${this.handler.prefix}help <command>\` for more information on one command.
-      The current prefix is \`${this.handler.prefix}\`.
+      Here are a list of commands registered.\nYou can type \`${this.handler.prefix(message)}help <command>\` for more information on one command.
+      The current prefix is \`${this.handler.prefix(message)}\`.
       `))
       .setColor(colors.normal);
 

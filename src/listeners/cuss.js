@@ -16,9 +16,19 @@ export default class CussListener extends Listener {
 
   async exec(message) {
     if (this.filter.isProfane(message.content)) {
-      message.delete({ timeout: 1000 })
-        .then(msg => message.reply('Please don\'t cuss, message deleted since it contained flagged words!'))
-        .catch(console.error);
+
+      if (message.author.bot) return;
+      
+      // Check if the filter is enabled for the guild 
+      // TODO: fix
+      const filterState = this.client.db.getFilterStateSync('cuss');
+      console.log(filterState);
+
+      if (filterState == 'true') {
+        message.delete({ timeout: 1000 })
+          .then(msg => message.reply('Please don\'t cuss, message deleted since it contained flagged words!'))
+          .catch(console.error);
+      }
     }
   }
 }
