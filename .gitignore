@@ -123,3 +123,5 @@ config.json
 
 # Don't copy over mirai.sqlite3
 mirai.sqlite3
+
+.env
