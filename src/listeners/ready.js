@@ -11,6 +11,9 @@ export default class ReadyListener extends Listener {
   async exec() {
     console.log('Started Mirai bot!');
 
+    // // Set the Avatar
+    // this.client.user.setAvatar('/home/char/downloads/original.jpg');
+
     // Set playing activity
     this.client.user.setActivity('your instructions | m!help', { type: 'WATCHING' });
   }

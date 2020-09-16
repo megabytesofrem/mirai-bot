@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
 
-import { errorEmbed } from '../util/embed';
+import { errorEmbed } from '../../util/embed';
 
 export default class SetPrefixCommand extends Command {
   constructor() {
@@ -11,7 +11,7 @@ export default class SetPrefixCommand extends Command {
         content: 'Set the prefix for Mirai',
         usage: 'setprefix'
       },
-      category: 'util',
+      category: 'config',
       channel: 'guild',
       args: [
         {

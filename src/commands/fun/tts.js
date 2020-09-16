@@ -36,8 +36,16 @@ export default class TTSCommand extends Command {
     const vc = message.member.voice.channel;
 
     if (!vc) {
-      message.send(errorEmbed('Error', 'You need to be in a voice channel before I can use tts!'))
+      message.channel.send(errorEmbed('Error', 'You need to be in a voice channel before I can use tts!'))
       return;
+    }
+
+    // Replace some phrases
+    if (args.message.includes('uwu')) {
+      args.message = args.message.replace('uwu', 'you woo')
+    }
+    else if (args.message.includes('owo')) {
+      args.message = args.message.replace('owo', 'oh woah')
     }
 
     let connection

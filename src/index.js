@@ -36,6 +36,11 @@ class MiraiClient extends AkairoClient {
       directory: './src/listeners'
     });
 
+    this.listenerHandler.setEmitters({
+      commandHandler: this.commandHandler,
+      listenerHandler: this.listenerHandler
+    });
+
     this.commandHandler.useListenerHandler(this.listenerHandler);
     this.listenerHandler.loadAll();
 
