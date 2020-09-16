@@ -2,19 +2,18 @@
 A fun and friendly server waifu / Discord bot!
 
 ## Configuration
-Mirai will look for a `config.json` file in the root directory. An example is below, commented
-to explain each part (note: JSON doesn't support comments, so these will need to be removed)
-```jsonc
-{
-  "prefix": "m!", // bot prefix, can be changed with setprefix command but wip
-  "owners": [""]  // array of owner ids
-}
+Mirai will look for a `.env` file. This file should contain the `TOKEN` like so.
+```
+# Replace TOKEN with your actual bot token
+TOKEN=token here
+OWNERS=your id, if selfhosting
 ```
 
-## Usage
-1. Make sure that the environment variable `TOKEN` is set
-2. Run `npm start`, this will transpile the code using `babel` and then run it. Babel is needed since
-Mirai is written using modern ES6 Javascript which Node still doesn't support :/.
+If for some reason, you don't like using the `.env` file Mirai will also accept the environment variable `TOKEN` being set.
+
+## Self hosting
+If you wish to self host Mirai, make sure that the `TOKEN` environment variable is set (as mentioned above)
+then run `npm start`. Mirai will first compile its code from ES6/Babel to Node and then start running.
 
 ## Invite Mirai to your own server
 If you don't wish to self host Mirai, you can find an invite link below to an instance of the bot hosted by me. 

@@ -1,16 +1,13 @@
 import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
 import { Database, setup, getPrefix, setPrefix } from './database';
 
-// Import the config file
-import * as config from '../config.json';
-
 const token = process.env.TOKEN;
 
 class MiraiClient extends AkairoClient {
   constructor() {
     super({
       // Akairo options
-      ownerID: config.owners,
+      ownerID: process.env.OWNERS,
     }, {
       // Discord.js options
       disableMentions: 'everyone'
