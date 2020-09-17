@@ -2,7 +2,7 @@ import { Command, Flag } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
 import { errorEmbed } from '../../util/embed';
 
-export default class MusicStopCommand extends Command {
+export default class StopCommand extends Command {
   constructor() {
     super('stop', {
       aliases: ['stop'],
@@ -22,8 +22,6 @@ export default class MusicStopCommand extends Command {
   }
 
   async exec(message, args) {
-    //const vc = message.member.voice.channel;
-
     let connection
     try {
       connection = message.guild.voice.connection;

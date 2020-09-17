@@ -1,3 +1,4 @@
+import { info } from 'console';
 import { Command, Flag } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
 import { getInfo } from 'ytdl-core';
@@ -7,21 +8,17 @@ import { errorEmbed } from '../../util/embed';
 const child = require('child_process');
 const ytdl = require('ytdl-core');
 
-export default class MusicPlayCommand extends Command {
+export default class PlayCommand extends Command {
   constructor() {
     super('play', {
       aliases: ['play'],
       description: {
-        content: 'Plays a song from a URL',
-        usage: 'play url'
+        content: 'Plays the queue',
+        usage: 'play'
       },
       category: 'music',
       channel: 'guild',
       args: [
-        {
-          id: 'url',
-          type: 'string'
-        }
       ],
     });
   }
@@ -33,36 +30,55 @@ export default class MusicPlayCommand extends Command {
       message.channel.send(errorEmbed('Error', 'You need to be in a voice channel before I can play music!'))
       return;
     }
+    
+    await this.play(message, this.client.queue[message.guild.id].songs.shift());
+  }
 
+  async play(message, song) {
+    // Get the item from the queue
+
+    if (song === undefined) {
+      message.channel.send('Queue is empty!');
+      this.client.queue[message.guild.id].playing = false;
+      message.member.voice.channel.leave();
+    }
+
+    // Play the song requested
+    let track = song;
+    console.log(track);
+
+    let embed = new MessageEmbed()
+    .setTitle('Now playing')
+    .setFooter(`Requested by ${track.requestedBy}`)
+    .setColor('#ff3dd5');
+
+    // Get the video information
+    const info = await ytdl.getInfo(track.url);
+
+    embed.addField('Title', info.videoDetails.title);
+    embed.addField('URL', track.url)
+    embed.addField('Video ID', info.videoDetails.videoId);
+    
+    message.channel.send(embed);
+
+    // Play the track
     let connection
     try {
-      connection = await vc.join();
+      connection = await message.member.voice.channel.join();
     } catch (err) {
       console.error(err);
       return;
     }
-
-    // We are connected to a vc, speak
-    let embed = new MessageEmbed()
-      .setTitle('Now playing')
-      .setFooter(`Requested by ${message.author.username}`)
-      .setColor('#ff3dd5');
-
-    // Convert the gTTS stream to an MP3 using ffmpeg and pipe it to the connection
-    const ffmpeg = child.spawn("ffmpeg", ["-i", "-", "-ar", "44100", "-ac", "2", "-ab", "192k", "-f", "mp3", "-"])
-    const stream = ytdl(args.url);
-
-    // Get the video information
-    const info = await ytdl.getInfo(args.url);
-
-    embed.addField('Title', info.videoDetails.title);
-    embed.addField('URL', args.url)
-    embed.addField('Video ID', info.videoDetails.videoId);
     
+    const ffmpeg = child.spawn("ffmpeg", ["-i", "-", "-ar", "44100", "-ac", "2", "-ab", "192k", "-f", "mp3", "-"])
+    const stream = ytdl(track.url);
+
     stream.pipe(ffmpeg.stdin)
+    const player = connection.play(ffmpeg.stdout);
 
-    connection.play(ffmpeg.stdout)
-
-    return message.channel.send(embed);
+    // Play the next song in the queue
+    player.on('finish', async () => {
+      await this.play(message, this.client.queue[message.guild.id].songs.shift());
+    });
   }
 }

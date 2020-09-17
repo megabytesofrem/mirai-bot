@@ -7,6 +7,7 @@ export default class SetPrefixCommand extends Command {
   constructor() {
     super('setprefix', {
       aliases: ['setprefix'],
+      ownerOnly: true,
       description: {
         content: 'Set the prefix for Mirai',
         usage: 'setprefix'

@@ -15,6 +15,9 @@ class MiraiClient extends AkairoClient {
 
     this.setupDatabase();
 
+    // Queue for the music bot
+    this.queue = {};
+
     this.commandHandler = new CommandHandler(this, {
       directory: './src/commands',
       prefix: message => {
@@ -25,7 +28,7 @@ class MiraiClient extends AkairoClient {
             return prefix;
           }
           else {
-            return 'm!';
+            return 'mm!';
           }
         }
       }
