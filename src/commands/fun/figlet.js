@@ -1,13 +1,15 @@
 import { Command } from 'discord-akairo';
 const figlet = require('figlet');
 
+import { MESSAGES } from '../../constants';
+
 export default class FigletCommand extends Command {
   constructor() {
     super('figlet', {
       aliases: ['figlet', 'ascii'],
       description: {
-        content: 'Generate cool ASCII text',
-        usage: 'figlet <message> [--font <name>]'
+        content: MESSAGES.HELP.FIGLET_DESCRIPTION,
+        usage: MESSAGES.HELP.FIGLET_USAGE
       },
       category: 'fun',
       args: [

@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo';
 import axios from 'axios';
 
+import { MESSAGES } from '../../constants';
 import _ from 'lodash';
 
 export default class EggIrlCommand extends Command {
@@ -8,8 +9,8 @@ export default class EggIrlCommand extends Command {
     super('eggirl', {
       aliases: ['eggirl', 'egg_irl'],
       description: {
-        content: 'Replies with a random post from r/egg_irl',
-        usage: 'eggirl'
+        content: MESSAGES.HELP.EGGIRL_DESCRIPTION,
+        usage: MESSAGES.HELP.EGGIRL_USAGE
       },
       category: 'fun',
       args: [

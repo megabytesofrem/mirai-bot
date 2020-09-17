@@ -1,12 +1,14 @@
 import { Command } from 'discord-akairo';
 
+import { MESSAGES } from '../constants';
+
 export default class PingCommand extends Command {
   constructor() {
     super('ping', {
       aliases: ['ping'],
       description: {
-        content: 'Ping pong!',
-        usage: 'ping'
+        content: MESSAGES.HELP.PING_DESCRIPTION,
+        usage: MESSAGES.HELP.PING_USAGE
       },
       category: 'util',
       channel: 'guild',
@@ -16,6 +18,6 @@ export default class PingCommand extends Command {
   }
 
   async exec(message) {
-    return message.reply('pong!');
+    return message.reply(MESSAGES.PING);
   }
 }

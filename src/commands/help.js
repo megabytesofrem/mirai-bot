@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
 
-import { colors } from '../util/structs';
+import { MESSAGES, COLOR_DEFAULT } from '../constants';
 import dedent from 'dedent-js';
 
 export default class HelpCommand extends Command {
@@ -9,7 +9,7 @@ export default class HelpCommand extends Command {
     super('help', {
       aliases: ['help'],
       description: {
-        content: 'Display help for Mirai'
+        content: MESSAGES.HELP.HELP_DESCRIPTION
       },
       category: 'util',
       args: [
@@ -30,7 +30,7 @@ export default class HelpCommand extends Command {
       const embed = new MessageEmbed()
         .setTitle(`${command.aliases[0]}`)
         .addField('❯ Description', command.description.content || '\u200b')
-        .setColor(colors.normal);
+        //.setColor(colors.normal);
 
       // List any optional aliases
       if (command.aliases.length > 1)
@@ -50,7 +50,7 @@ export default class HelpCommand extends Command {
       Here are a list of commands registered.\nYou can type \`${this.handler.prefix(message)}help <command>\` for more information on one command.
       The current prefix is \`${this.handler.prefix(message)}\`.
       `))
-      .setColor(colors.normal);
+      .setColor(COLOR_DEFAULT);
 
     for (const category of this.handler.categories.array()) {
       embed.addField(

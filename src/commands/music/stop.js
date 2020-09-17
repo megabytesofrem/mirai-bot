@@ -2,13 +2,15 @@ import { Command, Flag } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
 import { errorEmbed } from '../../util/embed';
 
+import { t, MESSAGES } from '../../constants';
+
 export default class StopCommand extends Command {
   constructor() {
     super('stop', {
       aliases: ['stop'],
       description: {
-        content: 'Plays a song from a URL',
-        usage: 'stop'
+        content: MESSAGES.HELP.STOP_DESCRIPTION,
+        usage: MESSAGES.HELP.STOP_USAGE,
       },
       category: 'music',
       channel: 'guild',

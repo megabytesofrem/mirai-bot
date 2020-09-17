@@ -4,6 +4,8 @@ import { MessageEmbed } from 'discord.js';
 import { getInfo } from 'ytdl-core';
 import { errorEmbed } from '../../util/embed';
 
+import { t, MESSAGES, COLOR_DEFAULT } from '../../constants';
+
 // es6-ify this
 const child = require('child_process');
 const ytdl = require('ytdl-core');
@@ -13,8 +15,8 @@ export default class NowPlayingCommand extends Command {
     super('np', {
       aliases: ['np', 'nowplaying'],
       description: {
-        content: 'Displays the currently playing song in the queue',
-        usage: 'np'
+        content: MESSAGES.HELP.NOWPLAYING_DESCRIPTION,
+        usage: MESSAGES.HELP.NOWPLAYING_USAGE
       },
       category: 'music',
       channel: 'guild',
@@ -25,7 +27,7 @@ export default class NowPlayingCommand extends Command {
 
   async exec(message, args) {
     if (song === undefined) {
-        message.channel.send('Nothing is currently playing!');
+        message.channel.send(MESSAGES.MUSIC_NOTHING_PLAYING);
     }
   
     // Play the song requested
@@ -33,9 +35,11 @@ export default class NowPlayingCommand extends Command {
     let song = songs[songs.length];
 
     let embed = new MessageEmbed()
-      .setTitle('Now playing')
-      .setFooter(`Requested by ${song.requestedBy}`)
-      .setColor('#ff3dd5');
+      .setTitle(MESSAGES.MUSIC_NOW_PLAYING_TITLE)
+      .setFooter(t(MESSAGES.MUSIC_REQUESTED_BY, {
+        'MEMBER': song.requestedBy
+      }))
+      .setColor(COLOR_DEFAULT);
 
     // Get the video information
     const info = await ytdl.getInfo(song.url);

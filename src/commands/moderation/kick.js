@@ -1,6 +1,8 @@
 import { Command } from 'discord-akairo';
 import { errorEmbed } from '../../util/embed';
 
+import { t, MESSAGES } from '../../constants';
+
 import _ from 'lodash';
 
 export default class KickCommand extends Command {
@@ -8,8 +10,8 @@ export default class KickCommand extends Command {
     super('kick', {
       aliases: ['kick', 'yeet'],
       description: {
-        content: 'Kicks a member',
-        usage: 'kick <member> [reason]'
+        content: MESSAGES.HELP.KICK_DESCRIPTION,
+        usage: MESSAGES.HELP.KICK_USAGE
       },
       category: 'moderation',
       clientPermissions: ['KICK_MEMBERS'],
@@ -23,7 +25,7 @@ export default class KickCommand extends Command {
         {
           id: 'reason',
           type: 'string',
-          match: 'text',
+          match: 'rest',
           default: 'No reason given'
         }
       ],
@@ -32,19 +34,20 @@ export default class KickCommand extends Command {
 
   async exec(message, args) {
     if (!args.member) {
-      const embed = errorEmbed('Error while kicking', ':negative_squared_cross_mark: No member found with that name');
+      const embed = errorEmbed('Error while kicking', MESSAGES.NO_MEMBER_FOUND);
       return message.channel.send(embed);
     }
 
     // Kick the user
     let mention = args.member.user;
 
-    const responses = [
-        `${mention} was kicked from the server for "${args.reason}".`,
-        `${mention} was yeeted from the server for "${args.reason}".`
-    ];
+    console.log(args.reason);
 
-    message.channel.send(`:white_check_mark: ${_.sample(responses)}`);
+    message.channel.send(t(MESSAGES.MEMBER_KICKED, {
+      'MEMBER': args.member,
+      'REASON': args.reason
+    }));
+
     args.member.kick(args.reason);
   } 
 }

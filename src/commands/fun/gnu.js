@@ -1,13 +1,15 @@
 import { Command } from 'discord-akairo';
 import dedent from 'dedent-js';
 
+import { MESSAGES } from '../../constants';
+
 export default class GnuCommand extends Command {
   constructor() {
     super('gnu', {
       aliases: ['gnu', 'linux', 'gnu/linux'],
       description: {
-        content: 'Replies with the GNU/Linux copypasta',
-        usage: 'gnu'
+        content: MESSAGES.HELP.GNU_DESCRIPTION,
+        usage: MESSAGES.HELP.GNU_USAGE
       },
       category: 'fun',
       args: [

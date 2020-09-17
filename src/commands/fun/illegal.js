@@ -6,13 +6,15 @@
 import { Command } from 'discord-akairo';
 import dedent from 'dedent-js';
 
+import { MESSAGES } from '../../constants';
+
 export default class IllegalCommand extends Command {
   constructor() {
     super('illegal', {
       aliases: ['illegal', 'linuxisillegal'],
       description: {
-        content: 'Replies with the "Linux is Illegal" copypasta',
-        usage: 'illegal'
+        content: MESSAGES.HELP.ILLEGAL_DESCRIPTION,
+        usage: MESSAGES.HELP.ILLEGAL_USAGE
       },
       category: 'fun',
       args: [

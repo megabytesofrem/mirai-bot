@@ -1,6 +1,8 @@
 import { Command } from 'discord-akairo';
 import { errorEmbed } from '../../util/embed';
 
+import { MESSAGES } from '../../constants';
+
 // es6-ify this
 const child = require('child_process');
 const gTTS = require('gtts');
@@ -10,8 +12,8 @@ export default class TTSCommand extends Command {
     super('tts', {
       aliases: ['tts', 'speak'],
       description: {
-        content: 'I can speak too using gTTS',
-        usage: 'tts message'
+        content: MESSAGES.HELP.TTS_DESCRIPTION,
+        usage: MESSAGES.HELP.TTS_USAGE
       },
       category: 'fun',
       args: [
@@ -36,16 +38,8 @@ export default class TTSCommand extends Command {
     const vc = message.member.voice.channel;
 
     if (!vc) {
-      message.channel.send(errorEmbed('Error', 'You need to be in a voice channel before I can use tts!'))
+      message.channel.send(errorEmbed('Error', MESSAGES.TTS_NO_VC))
       return;
-    }
-
-    // Replace some phrases
-    if (args.message.includes('uwu')) {
-      args.message = args.message.replace('uwu', 'you woo')
-    }
-    else if (args.message.includes('owo')) {
-      args.message = args.message.replace('owo', 'oh woah')
     }
 
     let connection

@@ -4,6 +4,8 @@ import { MessageEmbed } from 'discord.js';
 import { getInfo } from 'ytdl-core';
 import { errorEmbed } from '../../util/embed';
 
+import { t, MESSAGES, COLOR_DEFAULT } from '../../constants';
+
 // es6-ify this
 const child = require('child_process');
 const ytdl = require('ytdl-core');
@@ -13,8 +15,8 @@ export default class PlayCommand extends Command {
     super('play', {
       aliases: ['play'],
       description: {
-        content: 'Plays the queue',
-        usage: 'play'
+        content: MESSAGES.HELP.PLAY_DESCRIPTION,
+        usage: MESSAGES.HELP.PLAY_USAGE
       },
       category: 'music',
       channel: 'guild',
@@ -27,10 +29,11 @@ export default class PlayCommand extends Command {
     const vc = message.member.voice.channel;
 
     if (!vc) {
-      message.channel.send(errorEmbed('Error', 'You need to be in a voice channel before I can play music!'))
+      message.channel.send(errorEmbed('Error', MESSAGES.MUSIC_NO_VC));
       return;
     }
     
+    // buggy
     await this.play(message, this.client.queue[message.guild.id].songs.shift());
   }
 
@@ -38,7 +41,7 @@ export default class PlayCommand extends Command {
     // Get the item from the queue
 
     if (song === undefined) {
-      message.channel.send('Queue is empty!');
+      message.channel.send(MESSAGES.MUSIC_QUEUE_EMPTY);
       this.client.queue[message.guild.id].playing = false;
       message.member.voice.channel.leave();
     }
@@ -48,9 +51,11 @@ export default class PlayCommand extends Command {
     console.log(track);
 
     let embed = new MessageEmbed()
-    .setTitle('Now playing')
-    .setFooter(`Requested by ${track.requestedBy}`)
-    .setColor('#ff3dd5');
+    .setTitle(MESSAGES.MUSIC_NOW_PLAYING)
+    .setFooter(t(MESSAGES.MUSIC_REQUESTED_BY, {
+      'MEMBER': song.requestedBy
+    }))
+    .setColor(COLOR_DEFAULT);
 
     // Get the video information
     const info = await ytdl.getInfo(track.url);

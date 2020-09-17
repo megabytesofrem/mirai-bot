@@ -4,6 +4,8 @@ import { MessageEmbed } from 'discord.js';
 import { getInfo } from 'ytdl-core';
 import { errorEmbed } from '../../util/embed';
 
+import { t, MESSAGES, COLOR_DEFAULT } from '../../constants';
+
 // es6-ify this
 const child = require('child_process');
 const ytdl = require('ytdl-core');
@@ -13,8 +15,8 @@ export default class AddToQueueCommand extends Command {
     super('add', {
       aliases: ['add'],
       description: {
-        content: 'Adds a song to the queue',
-        usage: 'add song'
+        content: MESSAGES.HELP.ADD_DESCRIPTION,
+        usage: MESSAGES.HELP.ADD_USAGE
       },
       category: 'music',
       channel: 'guild',
@@ -31,7 +33,7 @@ export default class AddToQueueCommand extends Command {
     const vc = message.member.voice.channel;
 
     if (!vc) {
-      message.channel.send(errorEmbed('Error', 'You need to be in a voice channel before I can play music!'))
+      message.channel.send(errorEmbed('Error', MESSAGES.MUSIC_NO_VC));
       return;
     }
 
@@ -49,8 +51,10 @@ export default class AddToQueueCommand extends Command {
       .addField('Title', song.title)
       .addField('Video ID', song.videoId)
       .addField('URL', song.url)
-      .setFooter(`Added by ${song.requestedBy}`)
-      .setColor('#ff3dd5');
+      .setFooter(t(MESSAGES.MUSIC_QUEUE_ADDED_BY, {
+        'MEMBER': song.requestedBy
+      }))
+      .setColor(COLOR_DEFAULT);
 
     message.channel.send(embed);
 

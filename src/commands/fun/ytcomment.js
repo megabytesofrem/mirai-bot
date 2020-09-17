@@ -1,13 +1,15 @@
 import { Command } from 'discord-akairo';
 import dedent from 'dedent-js';
 
+import { MESSAGES } from '../../constants';
+
 export default class YouTubeCommentCommand extends Command {
   constructor() {
-    super('youtubecomment', {
-      aliases: ['youtubecomment', 'ytcomment'],
+    super('ytcomment', {
+      aliases: ['ytcomment', 'youtubecomment'],
       description: {
-        content: 'Replies with the "YouTube Comment" copypasta',
-        usage: 'youtubecomment'
+        content: MESSAGES.HELP.YTCOMMENT_DESCRIPTION,
+        usage: MESSAGES.HELP.YTCOMMENT_USAGE
       },
       category: 'fun',
       args: [

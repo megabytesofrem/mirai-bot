@@ -1,6 +1,8 @@
 import { Command } from 'discord-akairo';
 import scraper from 'azlyrics-scraper';
 
+import { MESSAGES } from '../../constants';
+
 function splitParagraphs(str, n) {
   // 1. Split by \n
   let split = str.split('\n');
@@ -32,14 +34,15 @@ export default class LyricsCommand extends Command {
     super('lyrics', {
       aliases: ['lyrics', 'azlyrics'],
       description: {
-        content: 'Scrape AZLyrics for lyrics for a song',
-        usage: 'lyrics <song title>'
+        content: MESSAGES.HELP.LYRICS_DESCRIPTION,
+        usage: MESSAGES.HELP.LYRICS_USAGE
       },
       category: 'fun',
       args: [
         {
           id: 'title',
-          type: 'string'
+          type: 'string',
+          match: 'text',
         }
       ]
     })
