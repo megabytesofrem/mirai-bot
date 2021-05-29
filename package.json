@@ -18,7 +18,7 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
     "axios": "^0.20.0",
-    "azlyrics-scraper": "^1.0.6",
+    "azlyrics-scraper": "github:harrego/AzlyricScraper#master",
     "bad-words": "^3.0.3",
     "better-sqlite3": "^7.1.1",
     "dedent-js": "^1.0.1",
