@@ -22,6 +22,7 @@ export default class HelpCommand extends Command {
   }
 
   async exec(message, args) {
+    console.log('Help command called');
     // thanks to https://github.com/Naval-Base/yuudachi/blob/master/src/bot/commands/util/help.ts
 
     const { command } = args;

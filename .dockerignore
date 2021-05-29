@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+.gitignore
+.git
+*.nix
+README.md
+*.sqlite3
+.env
