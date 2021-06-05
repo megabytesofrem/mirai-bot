@@ -1,6 +1,6 @@
 import { info } from 'console';
 import { Command, Flag } from 'discord-akairo';
-import { getInfo } from 'ytdl-core';
+import { getInfo } from 'ytdl-core-discord';
 import { errorEmbed, songEmbed } from '../../util/embed';
 import { playFromQueue } from '../../util/musicqueue';
 

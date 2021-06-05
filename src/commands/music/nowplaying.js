@@ -5,7 +5,7 @@ import { t, MESSAGES, COLOR_DEFAULT } from '../../constants';
 
 // es6-ify this
 const child = require('child_process');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 
 export default class NowPlayingCommand extends Command {
   constructor() {

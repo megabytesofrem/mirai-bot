@@ -1,13 +1,13 @@
 import { info } from 'console';
 import { Command, Flag } from 'discord-akairo';
-import { getInfo } from 'ytdl-core';
+import { getInfo } from 'ytdl-core-discord';
 import { errorEmbed, songEmbed } from './embed';
 import { secondsToTimestamp, timestampToSeconds } from './units';
 
 import { t, MESSAGES, COLOR_DEFAULT } from '../constants';
 
 const child = require('child_process');
-const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 
 /*
  * Play the item from top most item in the queue, will play the next song, notify the message's channel and remove the played song from the queue when the song has finished
@@ -51,16 +51,10 @@ export async function playFromQueue(queue, message, position) {
       return;
     }
     
-    var ffmpegArgs = ["-i", "-", "-ar", "44100", "-ac", "2", "-ab", "192k", "-f", "mp3", ]
-    if (position != undefined) {
-        ffmpegArgs = ffmpegArgs.concat(["-ss", positionSeconds.toString()])
-    }
-    ffmpegArgs.push("-")
-    const ffmpeg = child.spawn("ffmpeg", ffmpegArgs)
-    const stream = ytdl(song.url);
+    const stream = await ytdl(song.url);
+    
 
-    stream.pipe(ffmpeg.stdin)
-    const player = connection.play(ffmpeg.stdout);
+    const player = connection.play(stream, { type: 'opus' });
     queue.playing = true;
 
     player.on('error', async error => {
