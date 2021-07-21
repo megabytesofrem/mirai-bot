@@ -36,10 +36,16 @@ export default class TTSCommand extends Command {
   async exec(message, args) {
     const gtts = new gTTS(args.message, args.lang);
     const vc = message.member.voice.channel;
-
+    
     if (!vc) {
       message.channel.send(errorEmbed('Error', MESSAGES.TTS_NO_VC))
       return;
+    }
+    
+    const musicQueue = this.client.queue[message.guild.id];
+    if (musicQueue && musicQueue.playing) {
+        musicQueue.songs.shift();
+        musicQueue.playing = false;
     }
 
     let connection

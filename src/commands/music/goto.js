@@ -1,24 +1,26 @@
 import { Command, Flag } from 'discord-akairo';
 import { MessageEmbed } from 'discord.js';
-import { errorEmbed } from '../../util/embed';
+import { errorEmbed, musicQueueEmbed } from '../../util/embed';
 import { t, MESSAGES } from '../../constants';
+import { playFromQueue } from '../../util/musicqueue';
+import { timestampToSeconds } from '../../util/units';
 
 export default class StopCommand extends Command {
   constructor() {
-    super('stop', {
-      aliases: ['stop'],
+    super('goto', {
+      aliases: ['goto'],
       description: {
-        content: MESSAGES.HELP.STOP_DESCRIPTION,
-        usage: MESSAGES.HELP.STOP_USAGE,
+        content: MESSAGES.HELP.GOTO_DESCRIPTION,
+        usage: MESSAGES.HELP.GOTO_USAGE,
       },
       category: 'music',
       channel: 'guild',
       args: [
         {
-          id: 'url',
+          id: 'position',
           type: 'string'
         }
-      ],
+      ]
     });
   }
 
@@ -28,18 +30,14 @@ export default class StopCommand extends Command {
         message.channel.send(MESSAGES.MUSIC_NOTHING_PLAYING);
         return;
     }
-        
+    
     let connection
     try {
       connection = message.guild.voice.connection;
 
       if (connection && connection.dispatcher) {
         await connection.dispatcher.destroy();
-        if (queue) {
-            queue.songs.shift();
-            queue.playing = false;
-        }
-        message.channel.send(MESSAGES.MUSIC_STOPPED_PLAYBACK)
+        await playFromQueue(queue, message, args.position);
       }
     } catch (err) {
       console.error(err);

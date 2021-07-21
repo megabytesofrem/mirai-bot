@@ -6,9 +6,14 @@ export const MESSAGES = {
   MUSIC_NO_VC: 'You need to be in a voice channel before I can play music!',
   MUSIC_QUEUE_EMPTY: 'The queue is empty!',
   MUSIC_NOTHING_PLAYING: 'Nothing is currently playing!',
+  MUSIC_STOPPED_PLAYBACK: 'Stopped playback',
+  MUSIC_INVALID_URL: 'Invalid video link, only YouTube videos are supported',
 
-  MUSIC_NOW_PLAYING_TITLE: 'Now playing',
-  MUSIC_QUEUE_ADDED_TITLE: 'Added to the queue',
+  MUSIC_NOW_PLAYING_TITLE: 'Now Playing',
+  MUSIC_QUEUE_ADDED_TITLE: 'Added to the Queue',
+  MUSIC_QUEUE_TITLE: 'Current Music Queue',
+  
+  MUSIC_SKIPPED: 'Skipped track',
 
   MUSIC_QUEUE_ADDED_BY: 'Added by %MEMBER%',
   MUSIC_REQUESTED_BY: 'Requested by %MEMBER%',
@@ -66,11 +71,20 @@ export const MESSAGES = {
     BAN_USAGE: 'ban <member> [reason]',
 
     // Music bot
-    PLAY_DESCRIPTION: 'Plays the queue',
-    PLAY_USAGE: 'play',
-
+    PLAY_DESCRIPTION: 'Plays a given song, adds it to the queue or resumes the queue',
+    PLAY_USAGE: 'play [track]',
+    
+    SKIP_DESCRIPTION: 'Skips the current song in the queue',
+    SKIP_USAGE: 'skip',
+    
+    QUEUE_DESCRIPTION: 'View the music queue',
+    QUEUE_USAGE: 'queue',
+    
     ADD_DESCRIPTION: 'Adds a song to the queue',
     ADD_USAGE: 'add <song>',
+    
+    GOTO_DESCRIPTION: 'Set the playhead at the given timestamp, provide no timestamp to restart playback',
+    GOTO_USAGE: 'goto <timestamp>',
 
     STOP_DESCRIPTION: 'Stops the music playback',
     STOP_USAGE: 'stop',
@@ -83,7 +97,7 @@ export const MESSAGES = {
 export function t(message, args) {
   // Translate a template string, replacing each instance of %X% defined in the template
   // string with the key and value defined in the args,
-  // e.g { "MEMBER", "charlotte#xxxx" } would replace %MEMBER% in the template string
+  // e.g { "MEMBER", "abi#xxxx" } would replace %MEMBER% in the template string
   
   let formattedMessage = message;
   for (const key in args) {

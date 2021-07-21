@@ -57,6 +57,7 @@ class MiraiClient extends AkairoClient {
 
     console.log('Creating database if it doesn\'t exist..');
     await this.db.setup();
+    console.log('Database setup complete');
   }
 
   async login(token) {
