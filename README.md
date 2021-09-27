@@ -20,3 +20,12 @@ If you don't wish to self host Mirai, you can find an invite link below to an in
 Keep in mind, that many features of the bot are limited and the bot is not 24/7 atm.
 
 https://discord.com/oauth2/authorize?client_id=574381262899511345&permissions=8&scope=bot
+
+## Enviroment Variables
+
+|Variable|Description|Required|
+|-|-|-|
+|`TOKEN`|Discord bot token.|Yes|
+|`PREFIX`|Global prefix, is `m!` by default.|No|
+|`PUBLIC_VERSION`|Optional version displayed in `info` command.|No|
+|`SOUNDCLOUD_CLIENT_ID`|SoundCloud client ID, required for playing SoundCloud music. Get from network inspector when browsing SoundCloud signed in.|No|

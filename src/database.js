@@ -1,4 +1,4 @@
-const sql = require('better-sqlite3');
+import sql from 'better-sqlite3';
 
 export class Database {
   //
@@ -8,8 +8,10 @@ export class Database {
   // Copyright (c) 2020 Charlotte
   //
 
+  // ill do what i want bitch
+
   async setup() {
-    this.conn = sql('mirai.sqlite3', { verbose: console.log });
+    this.conn = sql('mirai.sqlite3');
 
     // Guild specific options for the bot
     console.log('Creating table "options" if it doesn\'t exist..');

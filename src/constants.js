@@ -7,7 +7,7 @@ export const MESSAGES = {
   MUSIC_QUEUE_EMPTY: 'The queue is empty!',
   MUSIC_NOTHING_PLAYING: 'Nothing is currently playing!',
   MUSIC_STOPPED_PLAYBACK: 'Stopped playback',
-  MUSIC_INVALID_URL: 'Invalid video link, only YouTube videos are supported',
+  MUSIC_INVALID_URL: 'Invalid song link, only YouTube and SoundCloud links are supported',
 
   MUSIC_NOW_PLAYING_TITLE: 'Now Playing',
   MUSIC_QUEUE_ADDED_TITLE: 'Added to the Queue',
@@ -17,6 +17,14 @@ export const MESSAGES = {
 
   MUSIC_QUEUE_ADDED_BY: 'Added by %MEMBER%',
   MUSIC_REQUESTED_BY: 'Requested by %MEMBER%',
+
+  MUSIC_MISCONFIGURED_SOUNDCLOUD: 'SoundCloud hasn\'t been configured yet, ask your bot admin to add their client ID',
+
+  INFO: "Runtime Information",
+  INFO_GIT: "Current Git Commit",
+  INFO_RUNTIME: "Environment",
+  INFO_VERSION: "Version",
+  INFO_REQUESTED_BY: 'Requested by %MEMBER%',
 
   // Generic error messages
   NO_MEMBER_FOUND: ':negative_squared_cross_mark: No member found with that name',
@@ -32,6 +40,9 @@ export const MESSAGES = {
   HELP: {
     PING_DESCRIPTION: 'Ping pong!',
     PING_USAGE: 'ping',
+
+    INFO_DESCRIPTION: 'Get runtime information',
+    INFO_USAGE: 'info',
 
     HELP_DESCRIPTION: 'Display help for Mirai',
 

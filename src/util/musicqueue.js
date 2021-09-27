@@ -1,13 +1,13 @@
 import { info } from 'console';
 import { Command, Flag } from 'discord-akairo';
 import { getInfo } from 'ytdl-core-discord';
+import soundcloud from "soundcloud-downloader";
 import { errorEmbed, songEmbed } from './embed';
 import { secondsToTimestamp, timestampToSeconds } from './units';
+import child from "child_process";
+import ytdl from "ytdl-core-discord";
 
 import { t, MESSAGES, COLOR_DEFAULT } from '../constants';
-
-const child = require('child_process');
-const ytdl = require('ytdl-core-discord');
 
 /*
  * Play the item from top most item in the queue, will play the next song, notify the message's channel and remove the played song from the queue when the song has finished
@@ -50,22 +50,28 @@ export async function playFromQueue(queue, message, position) {
       console.error(err);
       return;
     }
+
+    function configurePlayer(player) {
+        player.on('error', async error => {
+            console.log(error)
+        })
     
-    const stream = await ytdl(song.url);
-    
+        // Play the next song in the queue
+        player.on('finish', async () => {
+            if (queue.songs[0] == song) {
+                queue.songs.shift();
+                await playFromQueue(queue, message);
+            }
+        });
+    }
+    if (song.type == "youtube") {
+        const stream = await ytdl(song.url);
 
-    const player = connection.play(stream, { type: 'opus' });
-    queue.playing = true;
-
-    player.on('error', async error => {
-        console.log(error)
-    })
-
-    // Play the next song in the queue
-    player.on('finish', async () => {
-        if (queue.songs[0] == song) {
-            queue.songs.shift();
-            await playFromQueue(queue, message);
-        }
-    });
+        configurePlayer(connection.play(stream, { type: 'opus' }))
+        queue.playing = true;
+    } else if (song.type == "soundcloud") {
+        const soundcloudStream = await soundcloud.download(song.url, process.env.SOUNDCLOUD_CLIENT_ID)
+        configurePlayer(connection.play(soundcloudStream))
+        queue.playing = true
+    }
 }

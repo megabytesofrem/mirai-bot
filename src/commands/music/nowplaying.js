@@ -2,10 +2,8 @@ import { info } from 'console';
 import { Command, Flag } from 'discord-akairo';
 import { errorEmbed, songEmbed } from '../../util/embed';
 import { t, MESSAGES, COLOR_DEFAULT } from '../../constants';
-
-// es6-ify this
-const child = require('child_process');
-const ytdl = require('ytdl-core-discord');
+import child from "child_process";
+import ytdl from "ytdl-core-discord";
 
 export default class NowPlayingCommand extends Command {
   constructor() {

@@ -2,6 +2,7 @@ import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
 import { Database, setup, getPrefix, setPrefix } from './database';
 
 const token = process.env.TOKEN;
+const globalPrefix = process.env.PREFIX || "m!";
 
 class MiraiClient extends AkairoClient {
   constructor() {
@@ -21,16 +22,14 @@ class MiraiClient extends AkairoClient {
     this.commandHandler = new CommandHandler(this, {
       directory: './src/commands',
       prefix: message => {
-        if (message.guild) {
+        if (message && message.guild) {
           const prefix = this.db.getPrefixSync(message.guild.id);
 
           if (prefix !== "") {
             return prefix;
           }
-          else {
-            return 'mm!';
-          }
         }
+        return globalPrefix;
       }
     });
 

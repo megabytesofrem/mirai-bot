@@ -3,9 +3,8 @@ import { errorEmbed } from '../../util/embed';
 
 import { MESSAGES } from '../../constants';
 
-// es6-ify this
-const child = require('child_process');
-const gTTS = require('gtts');
+import child from 'child_process';
+import gTTS from 'gtts';
 
 export default class TTSCommand extends Command {
   constructor() {

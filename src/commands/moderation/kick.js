@@ -41,8 +41,6 @@ export default class KickCommand extends Command {
     // Kick the user
     let mention = args.member.user;
 
-    console.log(args.reason);
-
     message.channel.send(t(MESSAGES.MEMBER_KICKED, {
       'MEMBER': args.member,
       'REASON': args.reason

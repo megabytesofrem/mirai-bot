@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-const Filter = require('bad-words');
+import Filter from 'bad-words';
 
 export default class CussListener extends Listener {
   constructor() {
@@ -22,7 +22,6 @@ export default class CussListener extends Listener {
       // Check if the filter is enabled for the guild 
       // TODO: fix
       const filterState = this.client.db.getFilterStateSync('cuss');
-      console.log(filterState);
 
       if (filterState == 'true') {
         message.delete({ timeout: 1000 })
