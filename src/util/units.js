@@ -22,7 +22,6 @@ export function timestampToSeconds(timestamp) {
     var multiplier = 1
     for (var y of x) {
         const number = parseInt(y)
-        console.log(number)
         if (number == NaN) {
             return 0
         }

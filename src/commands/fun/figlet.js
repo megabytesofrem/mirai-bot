@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo';
-const figlet = require('figlet');
+import figlet from 'figlet';
 
 import { MESSAGES } from '../../constants';
 
